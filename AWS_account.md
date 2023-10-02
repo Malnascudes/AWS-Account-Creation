@@ -76,44 +76,6 @@
 Instead of working with the root user we will create different sets of users with different premissions and use the root user only when needed. [This are the actions that require root access](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-tasks.html).
 The tool for managing of this users is the **"IAM Identity Center"**. To use it we will first have to enable it.
 
-
-<!-- 
-## Create User Group
-
-* Open the IAM console by searching for it in the finder or by accessing [this link](https://console.aws.amazon.com/iam/)
-
-<img src="assets/craete_user_1_export.png" alt="description" width="200">
-
-* Choose *"User Groups"*, and then choose "*Create New Group*"
-
-<img src="assets/create_group_1_export.png" alt="description" width="200">
-
-* Set "*User group name*" to `Administrators`
-* In the *"Attach permissions policies"* section select the `AdministratorAccess` policy
-* Scroll down and click on *"Create group"*
-
-<img src="assets/create_group_2_export.png" alt="description" width="200">
-
-
-## Create User
-
-Now that the group is created let's create a User and add it to the group.
-
-[REFERENCE](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html)
-
-* Go to the "*Users*" section on the left menu and select "*Create User*"
-
-<img src="assets/craete_user_2_export.png" alt="description" width="200">
-
-* Check the "*Provide user access to the AWS Management Console*" box and leave it to "*Specify a user in Identity Center*" and clickon "*Next*"
-
-<img src="assets/craete_user_3_export.png" alt="description" width="200">
-
-This will open a pop-up to go to the "Manage Identity Center".
-
-<img src="assets/craete_user_4_export.png" alt="description" width="200"> -->
-
-## Enabling IAM Identity Center
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-enable-identity-center.html)
 
 Search for the IAM Identity Center in the resource finder.
