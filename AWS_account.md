@@ -3,22 +3,20 @@
   - [Verify Identity](#verify-identity)
   - [Support Plan](#support-plan)
 - [Access AWS Account with root user](#access-aws-account-with-root-user)
-- [Set Up the AWS Account](#set-up-the-aws-account)
-  - [Enabling IAM Identity Center](#enabling-iam-identity-center)
+- [Additional Accounts](#additional-accounts)
+  - [Development Account](#development-account)
+  - [Staging Account](#staging-account)
+- [Enabling IAM Identity Center](#enabling-iam-identity-center)
 - [Administrator Users](#administrator-users)
   - [Create an Administrative Permission Set](#create-an-administrative-permission-set)
   - [Create Administrator User Group](#create-administrator-user-group)
   - [Create Administrator User](#create-administrator-user)
   - [Give Administraive permissions to created User](#give-administraive-permissions-to-created-user)
-  - [AWS access portal URL](#aws-access-portal-url)
-- [Crypsis Delizziosa Users](#crypsis-delizziosa-users)
-  - [Crypsis Delizziosa Account Creation](#crypsis-delizziosa-account-creation)
-  - [System Administrator permissions](#system-administrator-permissions)
+- [AWS access portal URL](#aws-access-portal-url)
+- [Crypsis Delizziosa User](#crypsis-delizziosa-user)
+  - [Create a System Administrator Permission Set](#create-a-system-administrator-permission-set)
   - [System Administrator User Group](#system-administrator-user-group)
-  - [System Administrator User (dev)](#system-administrator-user-dev)
-- [Final Accounts](#final-accounts)
-  - [Development Account](#development-account)
-  - [Staging Account](#staging-account)
+  - [System Administrator User](#system-administrator-user)
   - [Give System Administor permissions to Crypsis Users](#give-system-administor-permissions-to-crypsis-users)
 - [Cost Managing](#cost-managing)
   - [Set up Cost Explorer](#set-up-cost-explorer)
@@ -63,22 +61,53 @@
 
 * Click on "Go to AWS Console" or go to [this link](https://console.aws.amazon.com/console/home)
 
-* Enter root user email adress
+* **Enter root user email adress**
 
-* Enter passowrd for root user
+* **Enter passowrd for root user**
 
 <img src="assets/aws_homescreen_export.png" alt="description" width="600">
 
+# Additional Accounts
+In order to **isolate the development, staging and production environments** we will be creating a set of **additional accounts to totally separate the resources of each environment**. This will be done by creating **2 new accounts under the same email as the root user**, a development and a staging one, that will be accessed by the administrator users and the system administrator users.
+
+To create this accounts we will be using the **same email as the root user** but with small changes. We will be using a new tab of the AWS console, the **"*Organization*"** tab. To open it click on the user name to unfold a menu and select `Organization`
+
+<img src="assets/iam_identity_center_24_export.png" alt="description" width="400" style="display: block; margin: auto;">
+
+## Development Account
+* To create the development account click on ***"Add an AWS account"*** and fill in the following information:
+  * AWS account name: `Development`
+  * Email address of the account's owner: Here we will use the **same email as the root user but add `+dev` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+dev@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
+
 # Set Up the AWS Account
+  
+  * Leave IAM role name as it is and click on **"*Create AWS Account*"**
+
+
+
+## Staging Account
+* To create the staging account click on ***"Add an AWS account"*** and fill in the following information:
+  * AWS account name: `Staging`
+  * Email address of the account's owner: Here we will use the **same email as the root user but add `+stage` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+stage@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
+
+<img src="assets/iam_identity_center_27_export.png" alt="description" width="600" style="display: block; margin: auto;">
+  
+  * Leave IAM role name as it is and click on **"*Create AWS Account*"**
+
+<img src="assets/iam_identity_center_28_export.png" alt="description" width="600" style="display: block; margin: auto;">
+
+
+# Enabling IAM Identity Center
 
 [Reference](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html)
 
-Instead of working with the root user we will create different sets of users with different premissions and use the root user only when needed. [This are the actions that require root access](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-tasks.html).
+Instead of working with the root user **we will create different sets of users with different premissions and use the root user only when needed**. [This are the actions that require root access](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-tasks.html). We will create 2 users: an Administrator one used by you to manage the account, and a `crypsis-delizziosa` one used by us to manage the infrastructure.
+
 The tool for managing of this users is the **"IAM Identity Center"**. To use it we will first have to enable it.
 
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-enable-identity-center.html)
 
-Search for the IAM Identity Center in the resource finder.
+**Search for the "*IAM Identity Center*" in the resource finder.**
 
 <img src="assets/iam_identity_center_0_export.png" alt="description" width="600">
 
@@ -86,12 +115,12 @@ Proceed and click on "*Enable*" and "*Create AWS organization*"
 
 <img src="assets/iam_identity_center_1_export.png" alt="description" height="200">
 <img src="assets/iam_identity_center_2_export.png" alt="description" height="200">
-
 <img src="assets/iam_identity_center_3_export.png" alt="description" width="600">
+
 
 # Administrator Users
 
-We will now create and **Aministrator user** that will be used by you to **manage the account without using the root user.**
+We will now create and **Aministrator user** that will be used by you to **manage all the accounts without using the root user.**
 To do so we will start by creating an Admistrative Permission set, then an Admisitrator Users group and create a user in that group, finaly we will give the Administrative Permission set to the Administrator Users group so all users in that group have the administrative permissions.
 
 ## Create an Administrative Permission Set
@@ -143,8 +172,9 @@ To create an administrator user and add it to the created group follow this step
 
 <img src="assets/iam_identity_center_8_export.png" alt="description" width="125">
 
-* Fill in the following information 
-  * email adress: Input the email adress of the administrator user, this email will be used by you to access the AWS account as an administrator
+* Fill in the following information:
+  * Username: `Administrator`
+  * email adress: Input the **email adress of the administrator user (one of your choice)**, this email will be **used by you** to access the AWS account as an administrator
   * First name: Input the Administrator First Name
   * Last name: Input the Administrator First Name
   * Display name: Choose a display name for the Administrator User
@@ -153,6 +183,8 @@ To create an administrator user and add it to the created group follow this step
 
 * Leave the optional fields unset and click on "*Next*"
 * Add the user to previously created `Administrators` group
+
+
 * Review and click *"Add user"*
   
 <img src="assets/iam_identity_center_10_export.png" alt="description" width="400">
@@ -162,10 +194,11 @@ This will send a verification link to the email adress to verify the account and
 ## Give Administraive permissions to created User
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-assign-account-access-admin-user.html)
 
-We will now give the `AdministratorAccess` permission set to all the users in the `Administrators` group, including the one created in the previous section.
+We will now give the `AdministratorAccess` permission set to all the users in the `Administrators` group so they can access all the created accounts (main, development and staging) with administrative permissions.
 
 * Under "*Multi-account permissions*" choose "*AWS accounts*"
 
+* Select all the accounts (the root user created in [first section](#create-a-standalone-aws-account) and the `Development` and `Staging` ones created in the [Additional Accounts section](#additional-accounts)) and click on "*Assign users or groups*"
 
 * Select the root user created in [first section](#create-a-standalone-aws-account) and click on "Assign users or groups"
 
@@ -181,42 +214,42 @@ We will now give the `AdministratorAccess` permission set to all the users in th
 
 * Review and click on *"Submit"*
 
-## AWS access portal URL
+# AWS access portal URL
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-sign-in-access-portal.html)
+
+In order **to access the account without using the root user we need an "*AWS access portal URL*"**. Using this link all the users can loggin using the User name and their chosen password.
+
+To get the "*AWS access portal URL*" first go to the *"IAM Identity Center console"*.
+
+<img src="assets/iam_identity_center_0_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 In the left menu of *"IAM Identity Center console"* go to **Settings** and copy the `AWS access portal URL` from the *"Identity source"* section
 
 <img src="assets/iam_identity_center_11_export.png" alt="description" width="600">
 
-This link is the one that will be used for the users (us) to access the account by entering the user name and the password set by the user in the verification email.
+This link is the one that will be used for the users to access the account by entering the user name and the password set by the user in the verification email.
 
-# Crypsis Delizziosa Users
+This is what it looks like when you open the link:
 
-For security reasons we will create a users without administrator permissions that is able to manage servers and databases. This kind of users are also known as System Administrator users.
+<img src="assets/iam_identity_center_29_export.png" alt="description" width="250">
+<img src="assets/iam_identity_center_30_export.png" alt="description" height="250">
 
-This users will be managed by a new Crypsis Delizziosa Account.
+# Crypsis Delizziosa User
+
+For security reasons we will create a **user without administrator permissions that is able to manage servers and databases**. This kind of users are also known as System Administrator users.
+
+This users will have access to the Main Account, the Development and Staging one just like the Administrator User but with administrative permissions.
 To create them we will follow similar steps as [Administrator Users section](#administrator-users)
 
-## Crypsis Delizziosa Account Creation
-
-* In the AWS Console search for **"*AWS Organizations*"**
-
-<img src="assets/iam_identity_center_22_export.png" alt="description" width="600">
-
-* Click on **"*Add an AWS account*"**
-
-* Set **"*AWS account name*" to `Crypsis Delizziosa`**
-* Set **"*Email address of the account's owner*" to `crypsisdelizziosa@gmail.com`**
-
-<img src="assets/iam_identity_center_23_export.png" alt="description" width="600">
-
-* Click on "*Create AWS account*". This process may take a few minutes
-
-## System Administrator permissions
+## Create a System Administrator Permission Set
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-create-permission-set-to-grant-least-privilege-permissions.html)
 
 To create System Administrator for the new users will follow the same steps as in the [Create an administrative permission set](#create-an-administrative-permission-set) section but select `SystemAdministrator` as the "Policy for predefined permission set"
 [Here you can find a detailed description of the permissions given to the permission sets](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html)
+
+* Go to the *"IAM Identity Center console"*.
+
+<img src="assets/iam_identity_center_0_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 * Under "*Multi-account permissions*" choose "*Permission sets*"
 
@@ -224,7 +257,7 @@ To create System Administrator for the new users will follow the same steps as i
 
 * Click "*Create permission set*"
 
-* In the "*Permission set type*" leave it as "*Predefined permission set*", select `SystemAdministrator` and click *"Next"*
+* In the "*Permission set type*" leave it as "*Predefined permission set*", **select `SystemAdministrator` and click *"Next"***
 
 <img src="assets/iam_identity_center_12_export.png" alt="description" width="400">
 
@@ -237,7 +270,7 @@ To create System Administrator for the new users will follow the same steps as i
 ## System Administrator User Group
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addgroups.html)
 
-We will now create a User group to manage all the System Administrator users. To do so we will followe the same steps as in the [Create Administrator User Group section](#create-administrator-user-group)
+We will now create a User group to manage all the System Administrator users. To do so we will follow the same steps as in the [Create Administrator User Group section](#create-administrator-user-group)
 
 * Select **"*Groups*"** from the left menu of the *"IAM Identity Center console"*
 
@@ -252,18 +285,19 @@ We will now create a User group to manage all the System Administrator users. To
 <img src="assets/iam_identity_center_17_export.png" alt="description" width="600">
 
 
-## System Administrator User (dev)
+## System Administrator User
 
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addusers.html)
 
-To create an administrator user and add it to the created group follow this steps:
+Now we will create the user that will be used by us to manage the infrastructure on the main, development and staging account, this user will be in the `System Administrators`. To create an system administrator user and add it to the created group follow this steps:
 
 * Select **"*Users*"** from the left menu of the *"IAM Identity Center console"* and *"Add User"* 
 
 <img src="assets/iam_identity_center_8_export.png" alt="description" width="125">
 
-* Fill in the following information 
-  * email adress: `crypsisdelizziosa@gmail.com`
+* Fill in the following information
+  * Username: `crypsis-delizziosa`
+  * **email adress: `crypsisdelizziosa@gmail.com`**
   * First name: Crypsis
   * Last name: Delizziosa
   * Display name: Crypsis Delizziosa
@@ -271,62 +305,33 @@ To create an administrator user and add it to the created group follow this step
 <img src="assets/iam_identity_center_10_export.png" alt="description" width="600">
 
 * Leave the optional fields unset and click on "*Next*"
-* Add the user to previously created `Administrators` group
+* Add the user to previously created `System Administrators` group
+
+<img src="assets/iam_identity_center_31_export.png" alt="description" width="300" style="display: block; margin: auto;">
+
 * Review and click *"Add user"*
   
 <img src="assets/iam_identity_center_9_export.png" alt="description" width="400">
 
 This will send a verification link to the email adress to verify the account and set a password.
 
-# Final Accounts
-In order to isolate the development, staging and production environments we will be creating a set of additional accounts to totally separate the resources of each environment. This will be done by creating 2 new accounts, a development and a staging one, that will be accessed by the administrator users and the system administrator users.
-
-To create this accounts we will be using the **same email as the root user** but with small changes. We will be using a new tab of the AWS console, the **"*Organization*"** tab. To open it click on the user name to unfold a menu and select `Organization`
-
-<img src="assets/iam_identity_center_24_export.png" alt="description" width="400">
-
-## Development Account
-* To create the development account click on ***"Add an AWS account"*** and fill in the following information:
-  * AWS account name: `Development`
-  * Email address of the account's owner: Here we will use the **same email as the root user but add `+development` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+dev@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
-
-<img src="assets/iam_identity_center_25_export.png" alt="description" width="400">
-  
-  * Leave IAM role name as it is and click on **"*Create AWS Account*"**
-
-<img src="assets/iam_identity_center_26_export.png" alt="description" width="400">
-
-## Staging Account
-* To create the staging account click on ***"Add an AWS account"*** and fill in the following information:
-  * AWS account name: `Staging`
-  * Email address of the account's owner: Here we will use the **same email as the root user but add `+staging` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+stage@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
-
-<img src="assets/iam_identity_center_27_export.png" alt="description" width="400">
-  
-  * Leave IAM role name as it is and click on **"*Create AWS Account*"**
-
-<img src="assets/iam_identity_center_28_export.png" alt="description" width="400">
-
-
-
-
 
 ## Give System Administor permissions to Crypsis Users
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-assign-account-access-admin-user.html)
 
-We will now give the `SystemAdministrator` permission set to all the users in the `System Administrators` group, including the ones created in the previous sections.
+We will now give the `SystemAdministrator` permission set to all the users in the `System Administrators` group so they can access all the created accounts (main, development and staging) with system administrative permissions.
 
 * Under "*Multi-account permissions*" choose "*AWS accounts*"
 
-* Select the root user created in [first section](#create-a-standalone-aws-account) and click on "Assign users or groups"
+* Select all the accounts (the root user created in [first section](#create-a-standalone-aws-account) and the `Development` and `Staging` ones created in the [Additional Accounts section](#additional-accounts)) and click on "*Assign users or groups*"
 
 <img src="assets/iam_identity_center_13_export.png" alt="description" width="400">
 
-* Select the `Administrators` group previously created and click on *"Next"*
+* Select the `System Administrators` group previously created and click on *"Next"*
 
 <img src="assets/iam_identity_center_20_export.png" alt="description" width="400">
 
-* On *"Permission sets"* select the `AdministratorAccess` created.
+* On *"Permission sets"* select the `SystemAdministrator` created.
 
 <img src="assets/iam_identity_center_21_export.png" alt="description" width="400">
 
@@ -344,7 +349,7 @@ We will first set up a [Cost Explorer](https://aws.amazon.com/aws-cost-managemen
 **To perform this actions we need to log with the root user created in** [the first section](#create-a-standalone-aws-account)
 
 ## Set up Cost Explorer
-
+[Reference](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html)
 
 ## Creating a Budget
 We will now create a Budget that notifies us if we exceed, or are forecasted to exceed, the budget amount.
