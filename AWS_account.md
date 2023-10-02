@@ -30,7 +30,7 @@
 
 * Choose *"Create an AWS account"*.
 
-<img src="assets/account_creation_1_export.png" alt="description" width="500">
+<img src="assets/account_creation_1_export.png" alt="description" width="500" style="display: block; margin: auto;">
 
 
 * Enter your account information, and then choose Verify email address. This will send a verification code to your specified email address.
@@ -57,7 +57,7 @@
 
 # Access AWS Account with root user
 
-<img src="assets/login_1_export.png" alt="description" width="400">
+<img src="assets/login_1_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * Click on "Go to AWS Console" or go to [this link](https://console.aws.amazon.com/console/home)
 
@@ -65,7 +65,7 @@
 
 * **Enter passowrd for root user**
 
-<img src="assets/aws_homescreen_export.png" alt="description" width="600">
+<img src="assets/aws_homescreen_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 # Additional Accounts
 In order to **isolate the development, staging and production environments** we will be creating a set of **additional accounts to totally separate the resources of each environment**. This will be done by creating **2 new accounts under the same email as the root user**, a development and a staging one, that will be accessed by the administrator users and the system administrator users.
@@ -79,11 +79,11 @@ To create this accounts we will be using the **same email as the root user** but
   * AWS account name: `Development`
   * Email address of the account's owner: Here we will use the **same email as the root user but add `+dev` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+dev@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
 
-# Set Up the AWS Account
+<img src="assets/iam_identity_center_25_export.png" alt="description" width="600" style="display: block; margin: auto;">
   
   * Leave IAM role name as it is and click on **"*Create AWS Account*"**
 
-
+<img src="assets/iam_identity_center_26_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 ## Staging Account
 * To create the staging account click on ***"Add an AWS account"*** and fill in the following information:
@@ -109,7 +109,7 @@ The tool for managing of this users is the **"IAM Identity Center"**. To use it 
 
 **Search for the "*IAM Identity Center*" in the resource finder.**
 
-<img src="assets/iam_identity_center_0_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_0_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 Proceed and click on "*Enable*" and "*Create AWS organization*"
 
@@ -132,19 +132,19 @@ In order to give users certain permisions we will be using "Permission sets". Pe
 
 * In the "IAM Identity Center" console, under **"*Multi-account permissions*"** choose **"*Permission sets*"**
 
-<img src="assets/iam_identity_center_4_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_4_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Click **"*Create permission set*"**
 
 * In the "*Permission set type*" leave it as **"*Predefined permission set*"** and **select `AdministratorAccess`** and click *"Next"*
 
-<img src="assets/iam_identity_center_19_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_19_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * In the "*Specify permission set details*" page, keep the default settings and choose "*Next*"
 
 * Review and Create permission set
 
-<img src="assets/iam_identity_center_5_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_5_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 ## Create Administrator User Group
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addgroups.html)
@@ -153,7 +153,7 @@ User Groups allow to manage permissions on several users. We will now create a u
 
 * Select **"*Groups*"** from the left menu of the *"IAM Identity Center console"*
 
-<img src="assets/iam_identity_center_6_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_6_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Set **"*Group name*" to `Administrators`**
 
@@ -161,7 +161,7 @@ User Groups allow to manage permissions on several users. We will now create a u
 
 * Click *"Create Group"*
 
-<img src="assets/iam_identity_center_7_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_7_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 ## Create Administrator User
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addusers.html)
@@ -170,7 +170,7 @@ To create an administrator user and add it to the created group follow this step
 
 * Select **"*Users*"** from the left menu of the *"IAM Identity Center console"* and *"Add User"* 
 
-<img src="assets/iam_identity_center_8_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_8_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Fill in the following information:
   * Username: `Administrator`
@@ -179,15 +179,16 @@ To create an administrator user and add it to the created group follow this step
   * Last name: Input the Administrator First Name
   * Display name: Choose a display name for the Administrator User
 
-<img src="assets/iam_identity_center_18_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_18_export.png" alt="description" width="300" style="display: block; margin: auto;">
 
 * Leave the optional fields unset and click on "*Next*"
 * Add the user to previously created `Administrators` group
 
+<img src="assets/iam_identity_center_32_export.png" alt="description" width="300" style="display: block; margin: auto;">
 
 * Review and click *"Add user"*
   
-<img src="assets/iam_identity_center_10_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_10_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 This will send a verification link to the email adress to verify the account and set a password.
 
@@ -200,17 +201,15 @@ We will now give the `AdministratorAccess` permission set to all the users in th
 
 * Select all the accounts (the root user created in [first section](#create-a-standalone-aws-account) and the `Development` and `Staging` ones created in the [Additional Accounts section](#additional-accounts)) and click on "*Assign users or groups*"
 
-* Select the root user created in [first section](#create-a-standalone-aws-account) and click on "Assign users or groups"
-
-<img src="assets/iam_identity_center_13_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_13_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * Select the `Administrators` group previously created and click on *"Next"*
 
-<img src="assets/iam_identity_center_14_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_14_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * On *"Permission sets"* select the `AdministratorAccess` created.
 
-<img src="assets/iam_identity_center_15_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_15_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * Review and click on *"Submit"*
 
@@ -225,7 +224,7 @@ To get the "*AWS access portal URL*" first go to the *"IAM Identity Center conso
 
 In the left menu of *"IAM Identity Center console"* go to **Settings** and copy the `AWS access portal URL` from the *"Identity source"* section
 
-<img src="assets/iam_identity_center_11_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_11_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 This link is the one that will be used for the users to access the account by entering the user name and the password set by the user in the verification email.
 
@@ -253,19 +252,19 @@ To create System Administrator for the new users will follow the same steps as i
 
 * Under "*Multi-account permissions*" choose "*Permission sets*"
 
-<img src="assets/iam_identity_center_4_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_4_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Click "*Create permission set*"
 
 * In the "*Permission set type*" leave it as "*Predefined permission set*", **select `SystemAdministrator` and click *"Next"***
 
-<img src="assets/iam_identity_center_12_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_12_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * In the "*Specify permission set details*" page, keep the default settings and choose "*Next*"
 
 * Review and Create permission set
 
-<img src="assets/iam_identity_center_16_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_16_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 ## System Administrator User Group
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addgroups.html)
@@ -274,7 +273,7 @@ We will now create a User group to manage all the System Administrator users. To
 
 * Select **"*Groups*"** from the left menu of the *"IAM Identity Center console"*
 
-<img src="assets/iam_identity_center_6_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_6_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Set **"*Group name*" to `System Administrators`**
 
@@ -282,7 +281,7 @@ We will now create a User group to manage all the System Administrator users. To
 
 * Click *"Create Group"*
 
-<img src="assets/iam_identity_center_17_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_17_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 
 ## System Administrator User
@@ -293,7 +292,7 @@ Now we will create the user that will be used by us to manage the infrastructure
 
 * Select **"*Users*"** from the left menu of the *"IAM Identity Center console"* and *"Add User"* 
 
-<img src="assets/iam_identity_center_8_export.png" alt="description" width="125">
+<img src="assets/iam_identity_center_8_export.png" alt="description" width="125" style="display: block; margin: auto;">
 
 * Fill in the following information
   * Username: `crypsis-delizziosa`
@@ -302,7 +301,7 @@ Now we will create the user that will be used by us to manage the infrastructure
   * Last name: Delizziosa
   * Display name: Crypsis Delizziosa
 
-<img src="assets/iam_identity_center_10_export.png" alt="description" width="600">
+<img src="assets/iam_identity_center_9_export.png" alt="description" width="300" style="display: block; margin: auto;">
 
 * Leave the optional fields unset and click on "*Next*"
 * Add the user to previously created `System Administrators` group
@@ -311,7 +310,7 @@ Now we will create the user that will be used by us to manage the infrastructure
 
 * Review and click *"Add user"*
   
-<img src="assets/iam_identity_center_9_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_33_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 This will send a verification link to the email adress to verify the account and set a password.
 
@@ -325,15 +324,15 @@ We will now give the `SystemAdministrator` permission set to all the users in th
 
 * Select all the accounts (the root user created in [first section](#create-a-standalone-aws-account) and the `Development` and `Staging` ones created in the [Additional Accounts section](#additional-accounts)) and click on "*Assign users or groups*"
 
-<img src="assets/iam_identity_center_13_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_13_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * Select the `System Administrators` group previously created and click on *"Next"*
 
-<img src="assets/iam_identity_center_20_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_34_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * On *"Permission sets"* select the `SystemAdministrator` created.
 
-<img src="assets/iam_identity_center_21_export.png" alt="description" width="400">
+<img src="assets/iam_identity_center_35_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * Review and click on *"Submit"*
 
@@ -356,13 +355,13 @@ We will now create a Budget that notifies us if we exceed, or are forecasted to 
 
 * With the root user, click on the user name to unfold a menu and select `Billing Dashboard`
 
-<img src="assets/billing_1_export.png" alt="description" width="300">
+<img src="assets/billing_1_export.png" alt="description" width="300" style="display: block; margin: auto;">
 
 * Under *"Cost Management"* on the left menu select *"Budget"* Monthly cost budgets and then *"Create a budget"*
 
 * Use a "User Template" and select ***"Monthly cost budget"***
 
-<img src="assets/billing_2_export.png" alt="description" width="400">
+<img src="assets/billing_2_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
 * **Set the budget name, monthly budget and email adresses to send the alert to.** And click on *"Create budget"*
 
