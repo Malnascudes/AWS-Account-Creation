@@ -1,3 +1,5 @@
+# A guide to AWS accounts creation
+
 - [Create a standalone AWS account](#create-a-standalone-aws-account)
   - [Payment](#payment)
   - [Verify Identity](#verify-identity)
@@ -23,7 +25,7 @@
   - [Creating a Budget](#creating-a-budget)
 
 
-# Create a standalone AWS account
+## Create a standalone AWS account
 [Reference](https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-creating.html)
 
 * Open the [Amazon Web Services home page](https://aws.amazon.com/).
@@ -41,21 +43,21 @@
 
 * Enter your company or personal information.
 
-## Payment
+### Payment
 
 * Enter the information about payment method, and then choose Verify and Continue.
 
-## Verify Identity
+### Verify Identity
 
 * To Verify the Identity add the phone number so a SMS can be sent with a verification code.
 * Enter the verification code and press Continue
 
-## Support Plan
+### Support Plan
 * If desired select a support plan to have access to AWS support (not needed)
 
 * Complete Sign Up
 
-# Access AWS Account with root user
+## Access AWS Account with root user
 
 <img src="assets/login_1_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
@@ -67,14 +69,14 @@
 
 <img src="assets/aws_homescreen_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
-# Additional Accounts
+## Additional Accounts
 In order to **isolate the development, staging and production environments** we will be creating a set of **additional accounts to totally separate the resources of each environment**. This will be done by creating **2 new accounts under the same email as the root user**, a development and a staging one, that will be accessed by the administrator users and the system administrator users.
 
 To create this accounts we will be using the **same email as the root user** but with small changes. We will be using a new tab of the AWS console, the **"*Organization*"** tab. To open it click on the user name to unfold a menu and select `Organization`
 
 <img src="assets/iam_identity_center_24_export.png" alt="description" width="400" style="display: block; margin: auto;">
 
-## Development Account
+### Development Account
 * To create the development account click on ***"Add an AWS account"*** and fill in the following information:
   * AWS account name: `Development`
   * Email address of the account's owner: Here we will use the **same email as the root user but add `+dev` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+dev@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
@@ -85,7 +87,7 @@ To create this accounts we will be using the **same email as the root user** but
 
 <img src="assets/iam_identity_center_26_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
-## Staging Account
+### Staging Account
 * To create the staging account click on ***"Add an AWS account"*** and fill in the following information:
   * AWS account name: `Staging`
   * Email address of the account's owner: Here we will use the **same email as the root user but add `+stage` right before the `@`**. For example if the root user email was `root-user-email@domain.com` we will now use `root-user-email+stage@domain.com`. This is an AWS feature that lets us use the same email for different accounts to have the resources separated as we want now.
@@ -97,7 +99,7 @@ To create this accounts we will be using the **same email as the root user** but
 <img src="assets/iam_identity_center_28_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 
-# Enabling IAM Identity Center
+## Enabling IAM Identity Center
 
 [Reference](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html)
 
@@ -118,12 +120,12 @@ Proceed and click on "*Enable*" and "*Create AWS organization*"
 <img src="assets/iam_identity_center_3_export.png" alt="description" width="600">
 
 
-# Administrator Users
+## Administrator Users
 
 We will now create and **Aministrator user** that will be used by you to **manage all the accounts without using the root user.**
 To do so we will start by creating an Admistrative Permission set, then an Admisitrator Users group and create a user in that group, finaly we will give the Administrative Permission set to the Administrator Users group so all users in that group have the administrative permissions.
 
-## Create an Administrative Permission Set
+### Create an Administrative Permission Set
 
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/permissionsetsconcept.html)
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-create-an-administrative-permission-set.html)
@@ -146,7 +148,7 @@ In order to give users certain permisions we will be using "Permission sets". Pe
 
 <img src="assets/iam_identity_center_5_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
-## Create Administrator User Group
+### Create Administrator User Group
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addgroups.html)
 
 User Groups allow to manage permissions on several users. We will now create a user group for administor users.
@@ -163,7 +165,7 @@ User Groups allow to manage permissions on several users. We will now create a u
 
 <img src="assets/iam_identity_center_7_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
-## Create Administrator User
+### Create Administrator User
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addusers.html)
 
 To create an administrator user and add it to the created group follow this steps:
@@ -192,7 +194,7 @@ To create an administrator user and add it to the created group follow this step
 
 This will send a verification link to the email adress to verify the account and set a password.
 
-## Give Administraive permissions to created User
+### Give Administraive permissions to created User
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-assign-account-access-admin-user.html)
 
 We will now give the `AdministratorAccess` permission set to all the users in the `Administrators` group so they can access all the created accounts (main, development and staging) with administrative permissions.
@@ -213,7 +215,7 @@ We will now give the `AdministratorAccess` permission set to all the users in th
 
 * Review and click on *"Submit"*
 
-# AWS access portal URL
+## AWS access portal URL
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-sign-in-access-portal.html)
 
 In order **to access the account without using the root user we need an "*AWS access portal URL*"**. Using this link all the users can loggin using the User name and their chosen password.
@@ -233,14 +235,14 @@ This is what it looks like when you open the link:
 <img src="assets/iam_identity_center_29_export.png" alt="description" width="250">
 <img src="assets/iam_identity_center_30_export.png" alt="description" height="250">
 
-# Crypsis Delizziosa User
+## Crypsis Delizziosa User
 
 For security reasons we will create a **user without administrator permissions that is able to manage servers and databases**. This kind of users are also known as System Administrator users.
 
 This users will have access to the Main Account, the Development and Staging one just like the Administrator User but with administrative permissions.
 To create them we will follow similar steps as [Administrator Users section](#administrator-users)
 
-## Create a System Administrator Permission Set
+### Create a System Administrator Permission Set
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-create-permission-set-to-grant-least-privilege-permissions.html)
 
 To create System Administrator for the new users will follow the same steps as in the [Create an administrative permission set](#create-an-administrative-permission-set) section but select `SystemAdministrator` as the "Policy for predefined permission set"
@@ -266,7 +268,7 @@ To create System Administrator for the new users will follow the same steps as i
 
 <img src="assets/iam_identity_center_16_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
-## System Administrator User Group
+### System Administrator User Group
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addgroups.html)
 
 We will now create a User group to manage all the System Administrator users. To do so we will follow the same steps as in the [Create Administrator User Group section](#create-administrator-user-group)
@@ -284,7 +286,7 @@ We will now create a User group to manage all the System Administrator users. To
 <img src="assets/iam_identity_center_17_export.png" alt="description" width="600" style="display: block; margin: auto;">
 
 
-## System Administrator User
+### System Administrator User
 
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/addusers.html)
 
@@ -315,7 +317,7 @@ Now we will create the user that will be used by us to manage the infrastructure
 This will send a verification link to the email adress to verify the account and set a password.
 
 
-## Give System Administor permissions to Crypsis Users
+### Give System Administor permissions to Crypsis Users
 [Reference](https://docs.aws.amazon.com/singlesignon/latest/userguide/get-started-assign-account-access-admin-user.html)
 
 We will now give the `SystemAdministrator` permission set to all the users in the `System Administrators` group so they can access all the created accounts (main, development and staging) with system administrative permissions.
@@ -337,7 +339,7 @@ We will now give the `SystemAdministrator` permission set to all the users in th
 * Review and click on *"Submit"*
 
 
-# Cost Managing
+## Cost Managing
 [Reference](https://saturncloud.io/blog/setting-amazon-aws-billing-limits-what-you-should-know/)
 [Reference](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html)
 
@@ -347,10 +349,10 @@ We will first set up a [Cost Explorer](https://aws.amazon.com/aws-cost-managemen
 
 **To perform this actions we need to log with the root user created in** [the first section](#create-a-standalone-aws-account)
 
-## Set up Cost Explorer
+### Set up Cost Explorer
 [Reference](https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html)
 
-## Creating a Budget
+### Creating a Budget
 We will now create a Budget that notifies us if we exceed, or are forecasted to exceed, the budget amount.
 
 * With the root user, click on the user name to unfold a menu and select `Billing Dashboard`
